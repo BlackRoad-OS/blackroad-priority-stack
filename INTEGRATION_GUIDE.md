@@ -105,7 +105,7 @@ cd ~/blackroad-priority-stack/espocrm && docker compose restart
 ### 2.1 Connect Existing Devices to Headscale
 
 **Your Existing Devices:**
-- DigitalOcean Droplet: 159.65.43.12 (codex-infinity)
+- DigitalOcean Droplet: 159.65.43.12 (blackroad os-infinity)
 - Raspberry Pi: 192.168.4.38 (lucidia)
 - Raspberry Pi: 192.168.4.64 (blackroad-pi)
 - Raspberry Pi: 192.168.4.99 (lucidia alternate)
@@ -167,7 +167,7 @@ groups:
     - "admin@blackroad.io"
 
   group:servers:
-    - "codex-infinity"  # DigitalOcean
+    - "blackroad os-infinity"  # DigitalOcean
     - "lucidia"         # Pi 1
     - "blackroad-pi"    # Pi 2
 
@@ -408,7 +408,7 @@ process.stdin.on('data', (log) => {
 
 ## 6. DigitalOcean Droplet Integration
 
-### 6.1 Connect Codex Infinity (159.65.43.12)
+### 6.1 Connect BlackRoad OS Infinity (159.65.43.12)
 
 **Install Services on Droplet:**
 
@@ -476,7 +476,7 @@ chmod +x ~/deploy-to-all-pis.sh
 
 ---
 
-## 8. Port 8080 Cadillac Integration
+## 8. Port 8080 BlackRoad OS Integration
 
 ### 8.1 Connect Legacy Service
 
@@ -488,7 +488,7 @@ curl http://localhost:8080
 
 # Add to mesh network
 # If it's a Docker container:
-docker network connect headscale_blackroad-net br-8080-cadillac
+docker network connect headscale_blackroad-net br-8080-blackroad os
 
 # Or add reverse proxy in Headscale config
 docker exec blackroad-headscale headscale serve --config /etc/headscale/config.yaml
@@ -511,7 +511,7 @@ cloudflared tunnel route dns $TUNNEL_NAME identity.blackroad.io
 cloudflared tunnel route dns $TUNNEL_NAME crm.blackroad.io
 
 # Add additional services
-cloudflared tunnel route dns $TUNNEL_NAME codex.blackroad.io      # DigitalOcean
+cloudflared tunnel route dns $TUNNEL_NAME blackroad os.blackroad.io      # DigitalOcean
 cloudflared tunnel route dns $TUNNEL_NAME lucidia.blackroad.io   # Pi 1
 cloudflared tunnel route dns $TUNNEL_NAME pi2.blackroad.io       # Pi 2
 cloudflared tunnel route dns $TUNNEL_NAME legacy.blackroad.io    # Port 8080 service
@@ -532,7 +532,7 @@ ingress:
     service: http://localhost:8085
 
   # Route to mesh network IPs
-  - hostname: codex.blackroad.io
+  - hostname: blackroad os.blackroad.io
     service: http://100.64.0.1:80  # Tailscale IP of DigitalOcean
 
   - hostname: lucidia.blackroad.io
